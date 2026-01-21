@@ -22,7 +22,7 @@ body{
   overflow:hidden;
 }
 
-/* ✨ floating dots background */
+/* ✨ floating dots */
 body::before{
   content:"";
   position:fixed;
@@ -34,21 +34,6 @@ body::before{
 }
 @keyframes float{
   to{background-position:2000px 2000px}
-}
-
-/* 🔙 back button */
-.back-btn{
-  position:fixed;
-  top:16px;
-  left:16px;
-  background:rgba(255,255,255,.7);
-  backdrop-filter:blur(10px);
-  border:1px solid #fbcfe8;
-  border-radius:12px;
-  padding:8px 12px;
-  font-size:14px;
-  cursor:pointer;
-  box-shadow:0 10px 20px rgba(244,114,182,.25);
 }
 
 /* 💎 glass card */
@@ -107,13 +92,23 @@ audio{
   font-size:14px;
   opacity:.9;
 }
+
+/* 🔙 back button (inside yes screen only) */
+.back-btn{
+  position:absolute;
+  top:12px;
+  left:12px;
+  background:rgba(255,255,255,.8);
+  border:1px solid #fbcfe8;
+  border-radius:10px;
+  padding:6px 10px;
+  font-size:13px;
+  cursor:pointer;
+}
 </style>
 </head>
 
 <body>
-
-<!-- 🔙 BACK BUTTON -->
-<button class="back-btn" onclick="goBack()">← Back</button>
 
 <!-- QUESTION SCREEN -->
 <div class="card" id="question">
@@ -125,6 +120,10 @@ audio{
 
 <!-- YES SCREEN -->
 <div class="card" id="yesScreen" style="display:none">
+
+  <!-- 🔙 BACK (only here) -->
+  <button class="back-btn" onclick="goBack()">← Back</button>
+
   <h3>💗</h3>
   <p>Listen…</p>
 
@@ -135,7 +134,7 @@ audio{
 
   <p class="small" style="margin-top:16px">
     If nuvvu idhi accept chesthey…<br>
-    change your profile photo to that picture 🤍
+    change your profile photo to another one 🤍
   </p>
 </div>
 
@@ -151,7 +150,7 @@ function moveNo(){
   noBtn.style.top  = Math.random()*maxY + "px";
 }
 
-/* Desktop + Mobile support */
+/* Desktop + Mobile */
 noBtn.addEventListener("mouseenter", moveNo);
 noBtn.addEventListener("touchstart", moveNo);
 
