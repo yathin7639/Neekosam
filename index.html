@@ -9,6 +9,7 @@
 
 <style>
 *{box-sizing:border-box}
+
 body{
   margin:0;
   font-family:'Inter',sans-serif;
@@ -21,7 +22,7 @@ body{
   overflow:hidden;
 }
 
-/* ✨ soft floating dots */
+/* ✨ floating dots background */
 body::before{
   content:"";
   position:fixed;
@@ -33,6 +34,21 @@ body::before{
 }
 @keyframes float{
   to{background-position:2000px 2000px}
+}
+
+/* 🔙 back button */
+.back-btn{
+  position:fixed;
+  top:16px;
+  left:16px;
+  background:rgba(255,255,255,.7);
+  backdrop-filter:blur(10px);
+  border:1px solid #fbcfe8;
+  border-radius:12px;
+  padding:8px 12px;
+  font-size:14px;
+  cursor:pointer;
+  box-shadow:0 10px 20px rgba(244,114,182,.25);
 }
 
 /* 💎 glass card */
@@ -75,7 +91,7 @@ button{
   50%{transform:scale(1.1)}
 }
 
-/* 😅 NO runs away */
+/* 😅 NO button */
 #no{
   background:#fde2f3;
   color:#9d174d;
@@ -86,6 +102,7 @@ audio{
   width:100%;
   margin-top:18px;
 }
+
 .small{
   font-size:14px;
   opacity:.9;
@@ -95,8 +112,11 @@ audio{
 
 <body>
 
+<!-- 🔙 BACK BUTTON -->
+<button class="back-btn" onclick="goBack()">← Back</button>
+
 <!-- QUESTION SCREEN -->
-<div class="card" id="q">
+<div class="card" id="question">
   <h3>So…</h3>
   <p>Nee answer enti?</p>
   <button id="yes" onclick="accept()">YES 💗</button>
@@ -104,31 +124,45 @@ audio{
 </div>
 
 <!-- YES SCREEN -->
-<div class="card" id="y" style="display:none">
+<div class="card" id="yesScreen" style="display:none">
   <h3>💗</h3>
   <p>Listen…</p>
 
-  <!-- 🔊 replace with chelli voice -->
+  <!-- 🔊 chelli voice -->
   <audio controls>
     <source src="final-message.mp3" type="audio/mpeg">
   </audio>
 
   <p class="small" style="margin-top:16px">
     If nuvvu idhi accept chesthey…<br>
-    change your profile photo to another one 🤍
+    change your profile photo to that picture 🤍
   </p>
 </div>
 
 <script>
 const noBtn = document.getElementById("no");
-noBtn.addEventListener("mouseover",()=>{
-  noBtn.style.top = Math.random()*200 + "px";
-  noBtn.style.left = Math.random()*200 + "px";
-});
+
+function moveNo(){
+  const card = document.getElementById("question");
+  const maxX = card.clientWidth - noBtn.offsetWidth;
+  const maxY = card.clientHeight - noBtn.offsetHeight;
+
+  noBtn.style.left = Math.random()*maxX + "px";
+  noBtn.style.top  = Math.random()*maxY + "px";
+}
+
+/* Desktop + Mobile support */
+noBtn.addEventListener("mouseenter", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
 
 function accept(){
-  document.getElementById("q").style.display="none";
-  document.getElementById("y").style.display="block";
+  document.getElementById("question").style.display="none";
+  document.getElementById("yesScreen").style.display="block";
+}
+
+function goBack(){
+  document.getElementById("yesScreen").style.display="none";
+  document.getElementById("question").style.display="block";
 }
 </script>
 
