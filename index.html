@@ -83,6 +83,20 @@ button{
   position:absolute;
 }
 
+/* 🔙 back button — hidden by default */
+.back-btn{
+  position:absolute;
+  top:14px;
+  left:14px;
+  background:rgba(255,255,255,.85);
+  border:1px solid #fbcfe8;
+  border-radius:10px;
+  padding:6px 10px;
+  font-size:13px;
+  cursor:pointer;
+  display:none; /* 🔥 KEY FIX */
+}
+
 audio{
   width:100%;
   margin-top:18px;
@@ -92,25 +106,12 @@ audio{
   font-size:14px;
   opacity:.9;
 }
-
-/* 🔙 back button (inside yes screen only) */
-.back-btn{
-  position:absolute;
-  top:12px;
-  left:12px;
-  background:rgba(255,255,255,.8);
-  border:1px solid #fbcfe8;
-  border-radius:10px;
-  padding:6px 10px;
-  font-size:13px;
-  cursor:pointer;
-}
 </style>
 </head>
 
 <body>
 
-<!-- QUESTION SCREEN -->
+<!-- HOME / QUESTION -->
 <div class="card" id="question">
   <h3>So…</h3>
   <p>Nee answer enti?</p>
@@ -118,28 +119,28 @@ audio{
   <button id="no">NO</button>
 </div>
 
-<!-- YES SCREEN -->
+<!-- YES PAGE -->
 <div class="card" id="yesScreen" style="display:none">
 
-  <!-- 🔙 BACK (only here) -->
-  <button class="back-btn" onclick="goBack()">← Back</button>
+  <!-- 🔙 BACK (YES page only) -->
+  <button class="back-btn" id="backBtn" onclick="goBack()">← Back</button>
 
   <h3>💗</h3>
   <p>Listen…</p>
 
-  <!-- 🔊 chelli voice -->
   <audio controls>
     <source src="final-message.mp3" type="audio/mpeg">
   </audio>
 
   <p class="small" style="margin-top:16px">
     If nuvvu idhi accept chesthey…<br>
-    change your profile photo to another one 🤍
+    change your profile photo to that picture 🤍
   </p>
 </div>
 
 <script>
 const noBtn = document.getElementById("no");
+const backBtn = document.getElementById("backBtn");
 
 function moveNo(){
   const card = document.getElementById("question");
@@ -157,11 +158,13 @@ noBtn.addEventListener("touchstart", moveNo);
 function accept(){
   document.getElementById("question").style.display="none";
   document.getElementById("yesScreen").style.display="block";
+  backBtn.style.display="block"; // 🔥 show ONLY now
 }
 
 function goBack(){
   document.getElementById("yesScreen").style.display="none";
   document.getElementById("question").style.display="block";
+  backBtn.style.display="none"; // 🔥 hide again
 }
 </script>
 
